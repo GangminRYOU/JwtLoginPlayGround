@@ -1,0 +1,23 @@
+### 로그인
+POST http://localhost:8080/api/auth/signin
+Content-Type: application/json
+
+{
+  "email": "gangmini94@naver.com",
+  "password": "1234"
+}
+
+### 로그인 후 접속시도
+
+GET http://localhost:8080/
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnYW5nbWluaTk0QG5hdmVyLmNvbSIsImF1dGgiOiJTVFVERU5UIiwiaWF0IjoxNjg4NTI2OTI3LCJleHAiOjE2ODg2MTMzMjd9.458irrDa4tciv0S0YDRiB2wooZzC7g3zXrd5uFunZeLmIOz_zPaYXvs27yVI9OHl6--cmRoCupO0MvFdZHn-UA
+
+
+### ACCESS토큰 만료시
+
+POST http://localhost:8080/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refresh_token" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnYW5nbWluaTk0QG5hdmVyLmNvbSIsImF1dGgiOiJTVFVERU5UIiwiaWF0IjoxNjg4NTY4MjY0LCJleHAiOjE2ODkxNzMwNjR9.eKgkg2MH6mOnmzmVNLrER8-VyOsUq_NIID2XLSQHAaOdT67ZrJnBUgQhR54KweMdG2AfZnzBuovDnhT3geB5Qw"
+}
