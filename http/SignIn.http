@@ -10,7 +10,7 @@ Content-Type: application/json
 ### 로그인 후 접속시도
 
 GET http://localhost:8080/
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnYW5nbWluaTk0QG5hdmVyLmNvbSIsImF1dGgiOiJTVFVERU5UIiwiaWF0IjoxNjg4NTI2OTI3LCJleHAiOjE2ODg2MTMzMjd9.458irrDa4tciv0S0YDRiB2wooZzC7g3zXrd5uFunZeLmIOz_zPaYXvs27yVI9OHl6--cmRoCupO0MvFdZHn-UA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnYW5nbWluaTk0QG5hdmVyLmNvbSIsImF1dGgiOiJTVFVERU5UIiwiaWF0IjoxNjg4NjEzNjc2LCJleHAiOjE2ODg3MDAwNzZ9.8RxL0gnpBk4z-zocBXcAFHc40L2q9-EGDEPz9CCFztlSG1lrdbcTxWpB9FLXn2rl0DxC2RFShpZ8ErScYgNl8A
 
 
 ### ACCESS토큰 만료시

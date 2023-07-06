@@ -17,16 +17,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  cache:
-    type: redis
-    redis:
-      time-to-live: 3600
-      cache-null-values: true
-
   data:
     redis:
       host: localhost
       port: 6379
+  docker:
+    compose:
+      file: ./redis/compose.yml
 
 
 security:

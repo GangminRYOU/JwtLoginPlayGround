@@ -1,20 +1,13 @@
 package com.playground.jwt.api.auth.service;
 
-import java.time.Instant;
-import java.util.Date;
-
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.playground.jwt.api.auth.domain.RefreshToken;
 import com.playground.jwt.api.auth.dto.RefreshTokenRequest;
 import com.playground.jwt.api.auth.dto.TokenResponse;
 import com.playground.jwt.common.exception.AuthenticationException;
-import com.playground.jwt.common.exception.BusinessException;
 import com.playground.jwt.common.exception.ErrorCode;
 import com.playground.jwt.config.JwtTokenProvider;
-import com.playground.jwt.web.member.domain.Member;
 import com.playground.jwt.web.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -34,17 +27,8 @@ public class JwtTokenService {
 	 */
 	private String createAndSaveRefreshToken(String email, Authentication authentication){
 		String refreshToken = tokenProvider.createRefreshToken(authentication);
-		//JwtLoginService에서 들어오기 떄문에, email로 Member를 찾아서 RefreshTokenEntity생성
-		Member member = memberRepository.findByEmail(email).orElseThrow(RuntimeException::new);
-		RefreshToken tokenEntity = RefreshToken.builder()
-			.member(member)
-			.token(refreshToken)
-			.expiryDate(Instant.now().plusMillis(tokenProvider.REFRESH_TOKEN_EXPIRE_TIME))
-			.build();
-		//새로 발급했으니 기존의 토큰은 삭제해준다.
-		refreshTokenService.deleteTokenByMember(member);
-		// -> 이 부분은 약간 계층을 너무 많이 나눈게 아닌가 생각
-		refreshTokenService.saveRefreshToken(tokenEntity);
+		refreshTokenService.deleteTokenByEmail(email);
+		refreshTokenService.saveRefreshToken(email, refreshToken);
 		return refreshToken;
 	}
 
@@ -74,12 +58,8 @@ public class JwtTokenService {
 	private void validateRefreshToken(String token){
 		//Member를 찾아오기 위한 험난한 과정..
 		String username = tokenProvider.getUsernameFromToken(token);
-		Member member = memberRepository.findByEmail(username)
-			.orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND_ERROR));
-		if(!refreshTokenService.validateToken(member, token)){
+		if(!refreshTokenService.validateToken(token)){
 			throw new AuthenticationException(ErrorCode.AUTHENTICATION_FAILURE);
 		}
 	}
-
-
 }
